@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.AdvanceAdjustmentMapper" >
+  <resultMap id="BaseResultMap" type="org.java.entity.AdvanceAdjustment" >
+    <id column="adjustment_id" property="adjustmentId" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="adjustment_time" property="adjustmentTime" jdbcType="TIMESTAMP" />
+    <result column="compensate_case_id" property="compensateCaseId" jdbcType="VARCHAR" />
+    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="advance_price" property="advancePrice" jdbcType="DOUBLE" />
+    <result column="advance_reason" property="advanceReason" jdbcType="VARCHAR" />
+    <result column="advance_details" property="advanceDetails" jdbcType="VARCHAR" />
+    <result column="cross_strength_fee_sum" property="crossStrengthFeeSum" jdbcType="DOUBLE" />
+    <result column="business_fee_sum" property="businessFeeSum" jdbcType="DOUBLE" />
+    <result column="other_fee_sum" property="otherFeeSum" jdbcType="DOUBLE" />
+    <result column="instance_id" property="instanceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    adjustment_id, emp_id, adjustment_time, compensate_case_id, item_id, advance_price, 
+    advance_reason, advance_details, cross_strength_fee_sum, business_fee_sum, other_fee_sum, 
+    instance_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from advance_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from advance_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.java.entity.AdvanceAdjustment" >
+    insert into advance_adjustment (adjustment_id, emp_id, adjustment_time, 
+      compensate_case_id, item_id, advance_price, 
+      advance_reason, advance_details, cross_strength_fee_sum, 
+      business_fee_sum, other_fee_sum, instance_id
+      )
+    values (#{adjustmentId,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{adjustmentTime,jdbcType=TIMESTAMP}, 
+      #{compensateCaseId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{advancePrice,jdbcType=DOUBLE}, 
+      #{advanceReason,jdbcType=VARCHAR}, #{advanceDetails,jdbcType=VARCHAR}, #{crossStrengthFeeSum,jdbcType=DOUBLE}, 
+      #{businessFeeSum,jdbcType=DOUBLE}, #{otherFeeSum,jdbcType=DOUBLE}, #{instanceId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.java.entity.AdvanceAdjustment" >
+    insert into advance_adjustment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        adjustment_id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time,
+      </if>
+      <if test="compensateCaseId != null" >
+        compensate_case_id,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="advancePrice != null" >
+        advance_price,
+      </if>
+      <if test="advanceReason != null" >
+        advance_reason,
+      </if>
+      <if test="advanceDetails != null" >
+        advance_details,
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        cross_strength_fee_sum,
+      </if>
+      <if test="businessFeeSum != null" >
+        business_fee_sum,
+      </if>
+      <if test="otherFeeSum != null" >
+        other_fee_sum,
+      </if>
+      <if test="instanceId != null" >
+        instance_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        #{adjustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compensateCaseId != null" >
+        #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="advancePrice != null" >
+        #{advancePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="advanceReason != null" >
+        #{advanceReason,jdbcType=VARCHAR},
+      </if>
+      <if test="advanceDetails != null" >
+        #{advanceDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessFeeSum != null" >
+        #{businessFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFeeSum != null" >
+        #{otherFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="instanceId != null" >
+        #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.AdvanceAdjustment" >
+    update advance_adjustment
+    <set >
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compensateCaseId != null" >
+        compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="advancePrice != null" >
+        advance_price = #{advancePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="advanceReason != null" >
+        advance_reason = #{advanceReason,jdbcType=VARCHAR},
+      </if>
+      <if test="advanceDetails != null" >
+        advance_details = #{advanceDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        cross_strength_fee_sum = #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessFeeSum != null" >
+        business_fee_sum = #{businessFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFeeSum != null" >
+        other_fee_sum = #{otherFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="instanceId != null" >
+        instance_id = #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.AdvanceAdjustment" >
+    update advance_adjustment
+    set emp_id = #{empId,jdbcType=VARCHAR},
+      adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      item_id = #{itemId,jdbcType=VARCHAR},
+      advance_price = #{advancePrice,jdbcType=DOUBLE},
+      advance_reason = #{advanceReason,jdbcType=VARCHAR},
+      advance_details = #{advanceDetails,jdbcType=VARCHAR},
+      cross_strength_fee_sum = #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      business_fee_sum = #{businessFeeSum,jdbcType=DOUBLE},
+      other_fee_sum = #{otherFeeSum,jdbcType=DOUBLE},
+      instance_id = #{instanceId,jdbcType=VARCHAR}
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

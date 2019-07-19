@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.PayInAdvanceAdjustmentMapper" >
+  <resultMap id="BaseResultMap" type="org.java.entity.PayInAdvanceAdjustment" >
+    <id column="adjustment_id" property="adjustmentId" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="adjustment_time" property="adjustmentTime" jdbcType="TIMESTAMP" />
+    <result column="compensate_case_id" property="compensateCaseId" jdbcType="VARCHAR" />
+    <result column="death_and_disability" property="deathAndDisability" jdbcType="DOUBLE" />
+    <result column="medical_expense" property="medicalExpense" jdbcType="DOUBLE" />
+    <result column="property_loss" property="propertyLoss" jdbcType="DOUBLE" />
+    <result column="not_death_and_disability" property="notDeathAndDisability" jdbcType="DOUBLE" />
+    <result column="not_medical_expense" property="notMedicalExpense" jdbcType="DOUBLE" />
+    <result column="not_property_loss" property="notPropertyLoss" jdbcType="DOUBLE" />
+    <result column="cross_strength_sum" property="crossStrengthSum" jdbcType="DOUBLE" />
+    <result column="business_sum" property="businessSum" jdbcType="DOUBLE" />
+    <result column="sum" property="sum" jdbcType="DOUBLE" />
+    <result column="pay_in_advance_price" property="payInAdvancePrice" jdbcType="DOUBLE" />
+    <result column="instance_id" property="instanceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    adjustment_id, emp_id, adjustment_time, compensate_case_id, death_and_disability, 
+    medical_expense, property_loss, not_death_and_disability, not_medical_expense, not_property_loss, 
+    cross_strength_sum, business_sum, sum, pay_in_advance_price, instance_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pay_in_advance_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pay_in_advance_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.java.entity.PayInAdvanceAdjustment" >
+    insert into pay_in_advance_adjustment (adjustment_id, emp_id, adjustment_time, 
+      compensate_case_id, death_and_disability, medical_expense, 
+      property_loss, not_death_and_disability, not_medical_expense, 
+      not_property_loss, cross_strength_sum, business_sum, 
+      sum, pay_in_advance_price, instance_id
+      )
+    values (#{adjustmentId,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{adjustmentTime,jdbcType=TIMESTAMP}, 
+      #{compensateCaseId,jdbcType=VARCHAR}, #{deathAndDisability,jdbcType=DOUBLE}, #{medicalExpense,jdbcType=DOUBLE}, 
+      #{propertyLoss,jdbcType=DOUBLE}, #{notDeathAndDisability,jdbcType=DOUBLE}, #{notMedicalExpense,jdbcType=DOUBLE}, 
+      #{notPropertyLoss,jdbcType=DOUBLE}, #{crossStrengthSum,jdbcType=DOUBLE}, #{businessSum,jdbcType=DOUBLE}, 
+      #{sum,jdbcType=DOUBLE}, #{payInAdvancePrice,jdbcType=DOUBLE}, #{instanceId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.java.entity.PayInAdvanceAdjustment" >
+    insert into pay_in_advance_adjustment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        adjustment_id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time,
+      </if>
+      <if test="compensateCaseId != null" >
+        compensate_case_id,
+      </if>
+      <if test="deathAndDisability != null" >
+        death_and_disability,
+      </if>
+      <if test="medicalExpense != null" >
+        medical_expense,
+      </if>
+      <if test="propertyLoss != null" >
+        property_loss,
+      </if>
+      <if test="notDeathAndDisability != null" >
+        not_death_and_disability,
+      </if>
+      <if test="notMedicalExpense != null" >
+        not_medical_expense,
+      </if>
+      <if test="notPropertyLoss != null" >
+        not_property_loss,
+      </if>
+      <if test="crossStrengthSum != null" >
+        cross_strength_sum,
+      </if>
+      <if test="businessSum != null" >
+        business_sum,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+      <if test="payInAdvancePrice != null" >
+        pay_in_advance_price,
+      </if>
+      <if test="instanceId != null" >
+        instance_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        #{adjustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compensateCaseId != null" >
+        #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="deathAndDisability != null" >
+        #{deathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="medicalExpense != null" >
+        #{medicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="propertyLoss != null" >
+        #{propertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="notDeathAndDisability != null" >
+        #{notDeathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="notMedicalExpense != null" >
+        #{notMedicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="notPropertyLoss != null" >
+        #{notPropertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="crossStrengthSum != null" >
+        #{crossStrengthSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessSum != null" >
+        #{businessSum,jdbcType=DOUBLE},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="payInAdvancePrice != null" >
+        #{payInAdvancePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="instanceId != null" >
+        #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.PayInAdvanceAdjustment" >
+    update pay_in_advance_adjustment
+    <set >
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="compensateCaseId != null" >
+        compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="deathAndDisability != null" >
+        death_and_disability = #{deathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="medicalExpense != null" >
+        medical_expense = #{medicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="propertyLoss != null" >
+        property_loss = #{propertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="notDeathAndDisability != null" >
+        not_death_and_disability = #{notDeathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="notMedicalExpense != null" >
+        not_medical_expense = #{notMedicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="notPropertyLoss != null" >
+        not_property_loss = #{notPropertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="crossStrengthSum != null" >
+        cross_strength_sum = #{crossStrengthSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessSum != null" >
+        business_sum = #{businessSum,jdbcType=DOUBLE},
+      </if>
+      <if test="sum != null" >
+        sum = #{sum,jdbcType=DOUBLE},
+      </if>
+      <if test="payInAdvancePrice != null" >
+        pay_in_advance_price = #{payInAdvancePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="instanceId != null" >
+        instance_id = #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.PayInAdvanceAdjustment" >
+    update pay_in_advance_adjustment
+    set emp_id = #{empId,jdbcType=VARCHAR},
+      adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      death_and_disability = #{deathAndDisability,jdbcType=DOUBLE},
+      medical_expense = #{medicalExpense,jdbcType=DOUBLE},
+      property_loss = #{propertyLoss,jdbcType=DOUBLE},
+      not_death_and_disability = #{notDeathAndDisability,jdbcType=DOUBLE},
+      not_medical_expense = #{notMedicalExpense,jdbcType=DOUBLE},
+      not_property_loss = #{notPropertyLoss,jdbcType=DOUBLE},
+      cross_strength_sum = #{crossStrengthSum,jdbcType=DOUBLE},
+      business_sum = #{businessSum,jdbcType=DOUBLE},
+      sum = #{sum,jdbcType=DOUBLE},
+      pay_in_advance_price = #{payInAdvancePrice,jdbcType=DOUBLE},
+      instance_id = #{instanceId,jdbcType=VARCHAR}
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

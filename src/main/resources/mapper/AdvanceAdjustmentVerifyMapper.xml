@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.AdvanceAdjustmentVerifyMapper" >
+  <resultMap id="BaseResultMap" type="org.java.entity.AdvanceAdjustmentVerify" >
+    <id column="verify_id" property="verifyId" jdbcType="VARCHAR" />
+    <result column="adjustment_id" property="adjustmentId" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="adjustment_time" property="adjustmentTime" jdbcType="TIMESTAMP" />
+    <result column="is_adopt" property="isAdopt" jdbcType="VARCHAR" />
+    <result column="adjustment_comment" property="adjustmentComment" jdbcType="VARCHAR" />
+    <result column="instance_id" property="instanceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    verify_id, adjustment_id, emp_id, adjustment_time, is_adopt, adjustment_comment, 
+    instance_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from advance_adjustment_verify
+    where verify_id = #{verifyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from advance_adjustment_verify
+    where verify_id = #{verifyId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.java.entity.AdvanceAdjustmentVerify" >
+    insert into advance_adjustment_verify (verify_id, adjustment_id, emp_id, 
+      adjustment_time, is_adopt, adjustment_comment, 
+      instance_id)
+    values (#{verifyId,jdbcType=VARCHAR}, #{adjustmentId,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, 
+      #{adjustmentTime,jdbcType=TIMESTAMP}, #{isAdopt,jdbcType=VARCHAR}, #{adjustmentComment,jdbcType=VARCHAR}, 
+      #{instanceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.java.entity.AdvanceAdjustmentVerify" >
+    insert into advance_adjustment_verify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="verifyId != null" >
+        verify_id,
+      </if>
+      <if test="adjustmentId != null" >
+        adjustment_id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time,
+      </if>
+      <if test="isAdopt != null" >
+        is_adopt,
+      </if>
+      <if test="adjustmentComment != null" >
+        adjustment_comment,
+      </if>
+      <if test="instanceId != null" >
+        instance_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="verifyId != null" >
+        #{verifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentId != null" >
+        #{adjustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAdopt != null" >
+        #{isAdopt,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentComment != null" >
+        #{adjustmentComment,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceId != null" >
+        #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.AdvanceAdjustmentVerify" >
+    update advance_adjustment_verify
+    <set >
+      <if test="adjustmentId != null" >
+        adjustment_id = #{adjustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAdopt != null" >
+        is_adopt = #{isAdopt,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustmentComment != null" >
+        adjustment_comment = #{adjustmentComment,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceId != null" >
+        instance_id = #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where verify_id = #{verifyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.AdvanceAdjustmentVerify" >
+    update advance_adjustment_verify
+    set adjustment_id = #{adjustmentId,jdbcType=VARCHAR},
+      emp_id = #{empId,jdbcType=VARCHAR},
+      adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      is_adopt = #{isAdopt,jdbcType=VARCHAR},
+      adjustment_comment = #{adjustmentComment,jdbcType=VARCHAR},
+      instance_id = #{instanceId,jdbcType=VARCHAR}
+    where verify_id = #{verifyId,jdbcType=VARCHAR}
+  </update>
+</mapper>

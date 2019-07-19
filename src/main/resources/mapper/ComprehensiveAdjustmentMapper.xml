@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.ComprehensiveAdjustmentMapper" >
+  <resultMap id="BaseResultMap" type="org.java.entity.ComprehensiveAdjustment" >
+    <id column="adjustment_id" property="adjustmentId" jdbcType="VARCHAR" />
+    <result column="compensate_case_id" property="compensateCaseId" jdbcType="VARCHAR" />
+    <result column="is_total_loss" property="isTotalLoss" jdbcType="VARCHAR" />
+    <result column="liability_odds" property="liabilityOdds" jdbcType="DOUBLE" />
+    <result column="new_car_price" property="newCarPrice" jdbcType="DOUBLE" />
+    <result column="residual_value" property="residualValue" jdbcType="DOUBLE" />
+    <result column="death_and_disability" property="deathAndDisability" jdbcType="DOUBLE" />
+    <result column="medical_expense" property="medicalExpense" jdbcType="DOUBLE" />
+    <result column="property_loss" property="propertyLoss" jdbcType="DOUBLE" />
+    <result column="not_death_and_disability" property="notDeathAndDisability" jdbcType="DOUBLE" />
+    <result column="not_medical_expense" property="notMedicalExpense" jdbcType="DOUBLE" />
+    <result column="not_property_loss" property="notPropertyLoss" jdbcType="DOUBLE" />
+    <result column="other_fee" property="otherFee" jdbcType="DOUBLE" />
+    <result column="not_other_fee" property="notOtherFee" jdbcType="DOUBLE" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="cross_strength_sum" property="crossStrengthSum" jdbcType="DOUBLE" />
+    <result column="business_sum" property="businessSum" jdbcType="DOUBLE" />
+    <result column="adjustment_sum" property="adjustmentSum" jdbcType="DOUBLE" />
+    <result column="cross_strength_fee_sum" property="crossStrengthFeeSum" jdbcType="DOUBLE" />
+    <result column="business_fee_sum" property="businessFeeSum" jdbcType="DOUBLE" />
+    <result column="other_fee_sum" property="otherFeeSum" jdbcType="DOUBLE" />
+    <result column="actual_price" property="actualPrice" jdbcType="DOUBLE" />
+    <result column="adjustment_time" property="adjustmentTime" jdbcType="TIMESTAMP" />
+    <result column="explanation_of_calculation" property="explanationOfCalculation" jdbcType="VARCHAR" />
+    <result column="instance_id" property="instanceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    adjustment_id, compensate_case_id, is_total_loss, liability_odds, new_car_price, 
+    residual_value, death_and_disability, medical_expense, property_loss, not_death_and_disability, 
+    not_medical_expense, not_property_loss, other_fee, not_other_fee, emp_id, cross_strength_sum, 
+    business_sum, adjustment_sum, cross_strength_fee_sum, business_fee_sum, other_fee_sum, 
+    actual_price, adjustment_time, explanation_of_calculation, instance_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from comprehensive_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from comprehensive_adjustment
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.java.entity.ComprehensiveAdjustment" >
+    insert into comprehensive_adjustment (adjustment_id, compensate_case_id, is_total_loss, 
+      liability_odds, new_car_price, residual_value, 
+      death_and_disability, medical_expense, property_loss, 
+      not_death_and_disability, not_medical_expense, 
+      not_property_loss, other_fee, not_other_fee, 
+      emp_id, cross_strength_sum, business_sum, 
+      adjustment_sum, cross_strength_fee_sum, business_fee_sum, 
+      other_fee_sum, actual_price, adjustment_time, 
+      explanation_of_calculation, instance_id)
+    values (#{adjustmentId,jdbcType=VARCHAR}, #{compensateCaseId,jdbcType=VARCHAR}, #{isTotalLoss,jdbcType=VARCHAR}, 
+      #{liabilityOdds,jdbcType=DOUBLE}, #{newCarPrice,jdbcType=DOUBLE}, #{residualValue,jdbcType=DOUBLE}, 
+      #{deathAndDisability,jdbcType=DOUBLE}, #{medicalExpense,jdbcType=DOUBLE}, #{propertyLoss,jdbcType=DOUBLE}, 
+      #{notDeathAndDisability,jdbcType=DOUBLE}, #{notMedicalExpense,jdbcType=DOUBLE}, 
+      #{notPropertyLoss,jdbcType=DOUBLE}, #{otherFee,jdbcType=DOUBLE}, #{notOtherFee,jdbcType=DOUBLE}, 
+      #{empId,jdbcType=VARCHAR}, #{crossStrengthSum,jdbcType=DOUBLE}, #{businessSum,jdbcType=DOUBLE}, 
+      #{adjustmentSum,jdbcType=DOUBLE}, #{crossStrengthFeeSum,jdbcType=DOUBLE}, #{businessFeeSum,jdbcType=DOUBLE}, 
+      #{otherFeeSum,jdbcType=DOUBLE}, #{actualPrice,jdbcType=DOUBLE}, #{adjustmentTime,jdbcType=TIMESTAMP}, 
+      #{explanationOfCalculation,jdbcType=VARCHAR}, #{instanceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.java.entity.ComprehensiveAdjustment" >
+    insert into comprehensive_adjustment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        adjustment_id,
+      </if>
+      <if test="compensateCaseId != null" >
+        compensate_case_id,
+      </if>
+      <if test="isTotalLoss != null" >
+        is_total_loss,
+      </if>
+      <if test="liabilityOdds != null" >
+        liability_odds,
+      </if>
+      <if test="newCarPrice != null" >
+        new_car_price,
+      </if>
+      <if test="residualValue != null" >
+        residual_value,
+      </if>
+      <if test="deathAndDisability != null" >
+        death_and_disability,
+      </if>
+      <if test="medicalExpense != null" >
+        medical_expense,
+      </if>
+      <if test="propertyLoss != null" >
+        property_loss,
+      </if>
+      <if test="notDeathAndDisability != null" >
+        not_death_and_disability,
+      </if>
+      <if test="notMedicalExpense != null" >
+        not_medical_expense,
+      </if>
+      <if test="notPropertyLoss != null" >
+        not_property_loss,
+      </if>
+      <if test="otherFee != null" >
+        other_fee,
+      </if>
+      <if test="notOtherFee != null" >
+        not_other_fee,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="crossStrengthSum != null" >
+        cross_strength_sum,
+      </if>
+      <if test="businessSum != null" >
+        business_sum,
+      </if>
+      <if test="adjustmentSum != null" >
+        adjustment_sum,
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        cross_strength_fee_sum,
+      </if>
+      <if test="businessFeeSum != null" >
+        business_fee_sum,
+      </if>
+      <if test="otherFeeSum != null" >
+        other_fee_sum,
+      </if>
+      <if test="actualPrice != null" >
+        actual_price,
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time,
+      </if>
+      <if test="explanationOfCalculation != null" >
+        explanation_of_calculation,
+      </if>
+      <if test="instanceId != null" >
+        instance_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adjustmentId != null" >
+        #{adjustmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="compensateCaseId != null" >
+        #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTotalLoss != null" >
+        #{isTotalLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilityOdds != null" >
+        #{liabilityOdds,jdbcType=DOUBLE},
+      </if>
+      <if test="newCarPrice != null" >
+        #{newCarPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="residualValue != null" >
+        #{residualValue,jdbcType=DOUBLE},
+      </if>
+      <if test="deathAndDisability != null" >
+        #{deathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="medicalExpense != null" >
+        #{medicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="propertyLoss != null" >
+        #{propertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="notDeathAndDisability != null" >
+        #{notDeathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="notMedicalExpense != null" >
+        #{notMedicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="notPropertyLoss != null" >
+        #{notPropertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFee != null" >
+        #{otherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="notOtherFee != null" >
+        #{notOtherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="crossStrengthSum != null" >
+        #{crossStrengthSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessSum != null" >
+        #{businessSum,jdbcType=DOUBLE},
+      </if>
+      <if test="adjustmentSum != null" >
+        #{adjustmentSum,jdbcType=DOUBLE},
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessFeeSum != null" >
+        #{businessFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFeeSum != null" >
+        #{otherFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="actualPrice != null" >
+        #{actualPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="adjustmentTime != null" >
+        #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="explanationOfCalculation != null" >
+        #{explanationOfCalculation,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceId != null" >
+        #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.ComprehensiveAdjustment" >
+    update comprehensive_adjustment
+    <set >
+      <if test="compensateCaseId != null" >
+        compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTotalLoss != null" >
+        is_total_loss = #{isTotalLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilityOdds != null" >
+        liability_odds = #{liabilityOdds,jdbcType=DOUBLE},
+      </if>
+      <if test="newCarPrice != null" >
+        new_car_price = #{newCarPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="residualValue != null" >
+        residual_value = #{residualValue,jdbcType=DOUBLE},
+      </if>
+      <if test="deathAndDisability != null" >
+        death_and_disability = #{deathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="medicalExpense != null" >
+        medical_expense = #{medicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="propertyLoss != null" >
+        property_loss = #{propertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="notDeathAndDisability != null" >
+        not_death_and_disability = #{notDeathAndDisability,jdbcType=DOUBLE},
+      </if>
+      <if test="notMedicalExpense != null" >
+        not_medical_expense = #{notMedicalExpense,jdbcType=DOUBLE},
+      </if>
+      <if test="notPropertyLoss != null" >
+        not_property_loss = #{notPropertyLoss,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFee != null" >
+        other_fee = #{otherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="notOtherFee != null" >
+        not_other_fee = #{notOtherFee,jdbcType=DOUBLE},
+      </if>
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="crossStrengthSum != null" >
+        cross_strength_sum = #{crossStrengthSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessSum != null" >
+        business_sum = #{businessSum,jdbcType=DOUBLE},
+      </if>
+      <if test="adjustmentSum != null" >
+        adjustment_sum = #{adjustmentSum,jdbcType=DOUBLE},
+      </if>
+      <if test="crossStrengthFeeSum != null" >
+        cross_strength_fee_sum = #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="businessFeeSum != null" >
+        business_fee_sum = #{businessFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="otherFeeSum != null" >
+        other_fee_sum = #{otherFeeSum,jdbcType=DOUBLE},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="adjustmentTime != null" >
+        adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="explanationOfCalculation != null" >
+        explanation_of_calculation = #{explanationOfCalculation,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceId != null" >
+        instance_id = #{instanceId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.ComprehensiveAdjustment" >
+    update comprehensive_adjustment
+    set compensate_case_id = #{compensateCaseId,jdbcType=VARCHAR},
+      is_total_loss = #{isTotalLoss,jdbcType=VARCHAR},
+      liability_odds = #{liabilityOdds,jdbcType=DOUBLE},
+      new_car_price = #{newCarPrice,jdbcType=DOUBLE},
+      residual_value = #{residualValue,jdbcType=DOUBLE},
+      death_and_disability = #{deathAndDisability,jdbcType=DOUBLE},
+      medical_expense = #{medicalExpense,jdbcType=DOUBLE},
+      property_loss = #{propertyLoss,jdbcType=DOUBLE},
+      not_death_and_disability = #{notDeathAndDisability,jdbcType=DOUBLE},
+      not_medical_expense = #{notMedicalExpense,jdbcType=DOUBLE},
+      not_property_loss = #{notPropertyLoss,jdbcType=DOUBLE},
+      other_fee = #{otherFee,jdbcType=DOUBLE},
+      not_other_fee = #{notOtherFee,jdbcType=DOUBLE},
+      emp_id = #{empId,jdbcType=VARCHAR},
+      cross_strength_sum = #{crossStrengthSum,jdbcType=DOUBLE},
+      business_sum = #{businessSum,jdbcType=DOUBLE},
+      adjustment_sum = #{adjustmentSum,jdbcType=DOUBLE},
+      cross_strength_fee_sum = #{crossStrengthFeeSum,jdbcType=DOUBLE},
+      business_fee_sum = #{businessFeeSum,jdbcType=DOUBLE},
+      other_fee_sum = #{otherFeeSum,jdbcType=DOUBLE},
+      actual_price = #{actualPrice,jdbcType=DOUBLE},
+      adjustment_time = #{adjustmentTime,jdbcType=TIMESTAMP},
+      explanation_of_calculation = #{explanationOfCalculation,jdbcType=VARCHAR},
+      instance_id = #{instanceId,jdbcType=VARCHAR}
+    where adjustment_id = #{adjustmentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

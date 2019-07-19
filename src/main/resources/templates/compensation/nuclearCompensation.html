@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../js/element/index.css"/>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/element/index.js"></script>
+</head>
+
+<!--核赔页面-->
+
+<body>
+    <div id="app" style="width: 80%;margin: auto" id="app">
+        <form action="">
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="2">
+                        <label >待核赔任务</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label >赔案编号</label>
+                            <input type="text" class="form-control"  name="compensate_case_id" placeholder="赔案编号:" v-model="condition.compensate_case_id">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label >报案编号</label>
+                            <input type="text" class="form-control"  name="report_a_case_id" placeholder="报案编号:" v-model="condition.report_a_case_id">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label >被保险人</label>
+                            <input type="text" class="form-control"  name="insured_truename" placeholder="被保险人:" v-model="condition.insured_truename">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label >车牌号</label>
+                            <input type="text" class="form-control"  name="car_number" placeholder="车牌号:" v-model="condition.car_number">
+                        </div>
+                    </td>
+                </tr>
+                <tr style="text-align: right">
+                    <td colspan="2">
+                        <button type="button" class="btn btn-success btn-primary" id="search">查询</button>
+                        <!-- <button type="button" class="btn btn-primary" v-on:click="advanceModel">垫付理算</button>
+                        <button type="button" class="btn btn-primary" v-on:click="compensation">预赔理算</button>
+                        <button type="button" class="btn btn-primary" v-on:click="getIntoAdjustment">全面理算</button> -->
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table>
+
+        </table>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">垫付核赔</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg-heipei">预赔核赔</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg-quanmian">全面理算核赔</button>
+        <!---->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="width: 2000px">
+            <div class="modal-dialog modal-lg" role="document" style="width: 1200px">
+                <div class="modal-content" style="width: 1200px">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td colspan="8" style="text-align: left">
+                                <label  style="color: cornflowerblue">垫付理算信息</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >创建人</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >创建时间</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >垫付险别</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >垫付金额</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >垫付金额</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label  style="color: cornflowerblue">计算书说明:</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <label  style="color: cornflowerblue">
+                                    其他费用信息:
+                                </label>
+                            </td>
+                            <td style="text-align: right" colspan="8">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >交强费用合计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >商业费用合计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >总计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td colspan="7">
+                                <label >
+                                    费用名称
+                                </label>
+                            </td>
+                            <td>
+                                <label >
+                                    金额
+                                </label>
+                            </td>
+                        </tr>
+                        <!--循环-->
+                        <tr>
+
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <label >
+                                    垫付核赔意见
+                                </label>
+                                <select class="form-control" style="width: 250px">
+                                        <option>
+                                            同意赔付
+                                        </option>
+                                        <option>
+                                            拒绝赔付
+                                        </option>
+                                    </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                <button type="button" class="btn btn-info">上传文档</button>
+                                <button type="button" class="btn btn-success">提交</button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!--预赔核赔-->
+        <div class="modal fade bs-example-modal-lg-heipei" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document" style="width:  1200px">
+                <div class="modal-content">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <label  style="color:cornflowerblue">
+                                    预赔信息
+                                </label>
+                            </td>
+                            <td colspan="3" style="text-align: right">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >交强合计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >商业合计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >总计:</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td colspan="2" style="text-align: center">
+                                <label >
+                                    险种/责任
+                                </label>
+                            </td>
+                            <td style="text-align: center">
+                                <label >
+                                    保险金额(限额)
+                                </label>
+                            </td>
+                            <td>
+                                <label >
+                                    预赔金额
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <label >
+                                        垫付核赔意见
+                                    </label>
+                                <select class="form-control" style="width: 250px">
+                                    <option>同意赔付</option>
+                                    <option>拒绝赔付</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                <button type="button" class="btn btn-info">上传文档</button>
+                                <button type="button" class="btn btn-success">提交</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--全面理算核赔-->
+        <div class="modal fade bs-example-modal-lg-quanmian" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document" style="width: 1200px">
+                <div class="modal-content">
+                    <table class="table table-condensed">
+                        <tr>
+                            <td colspan="7">
+                                <label  style="color: cornflowerblue">&nbsp;&nbsp;&nbsp;全面理算</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label >是否全损</label>
+                                <select class="form-control" style="width: 150px">
+                                            <option>
+                                                <label >是</label>
+                                            </option>
+                                            <option>
+                                                <label >否</label>
+                                            </option>
+                                        </select>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label >事故责任</label>
+                                        <select class="form-control" style="width: 150px">
+                                                        <option>
+                                                                <label >同则</label>
+                                                        </option>
+                                                        <option>
+                                                                <label >全责</label>
+                                                        </option>
+                                                        <option>
+                                                                <label >他则</label>
+                                                        </option>
+                                                    </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" style="width: 150px" /><label  style="line-height: 30px;font-size: 20px">%</label>
+                                    </div>
+                                </form>
+                            </td>
+                            <td colspan="5" style="text-align: left">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">三者赔付本车交强赔款</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">新车购置价</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">自负额</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">残值金额</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">出险时当时的价格</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-condensed">
+                        <tr>
+                            <td>
+                                <label >理算信息</label>
+                            </td>
+                            <td colspan="7" style="text-align: right">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">交强合计</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">商业合计</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  style="line-height: 30px">合计</label>
+                                        <input class="form-control" type="text" style="width: 150px" />
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr style="text-align: center" class="info">
+                            <td>
+                                <label >险种/责任</label>
+                            </td>
+                            <td>
+                                <label >保险金额（限额）</label>
+                            </td>
+                            <td>
+                                <label >赔款金额</label>
+                            </td>
+                        </tr>
+                        <tr style="text-align: center">
+                            <td>
+                                <label >机动车强制三者险</label>
+                            </td>
+                            <td>
+                                <label ></label>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" disabled/>
+                            </td>
+
+                        </tr>
+                        <tr v-for="item in comprehensiveMotorVehicle" style="text-align: center">
+                            <td>
+                                <label >{{item.name}}</label>
+                            </td>
+                            <td>
+                                <label ></label>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" v-model="item.value" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label >交强赔款说明</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label >商业赔款说明</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <label >赔款计算说明</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <label >
+                                            垫付核赔意见
+                                        </label>
+                                <select class="form-control" style="width: 250px">
+                                        <option>同意赔付</option>
+                                        <option>拒绝赔付</option>
+                                    </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                <button type="button" class="btn btn-info">上传文档</button>
+                                <button type="button" class="btn btn-success">提交</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            "el": "#app",
+            "data": {
+                comprehensiveMotorVehicle: {
+                    duty: {
+                        value: 0,
+                        name: "----其他",
+                    },
+                    noDuty: {
+                        value: 0,
+                        name: "----无责其他",
+                    },
+                    deathMaim: {
+                        value: 0,
+                        name: "----死亡伤残",
+                    },
+                    medicalCare: {
+                        value: 0,
+                        name: "----医疗费用",
+                    },
+                    property: {
+                        value: 0,
+                        name: "----财产损失",
+                    },
+                    noDutyDeathMaim: {
+                        value: 0,
+                        name: "----无责死亡伤残",
+                    },
+                    noDutyMedicalCare: {
+                        value: 0,
+                        name: "----无责医疗费用",
+                    },
+                    noDutyProperty: {
+                        value: 0,
+                        name: "-----无责财产损失",
+                    }
+                },
+                condition: { //查询条件
+                    compensate_case_id: "",
+                    report_a_case_id: "",
+                    insured_truename: "",
+                    car_number: "",
+                    filing_submit_time: "",
+
+                },
+
+            }
+        })
+    </script>
+</body>
+
+</html>
