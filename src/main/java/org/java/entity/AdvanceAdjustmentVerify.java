@@ -72,4 +72,17 @@ public class AdvanceAdjustmentVerify {
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId == null ? null : instanceId.trim();
     }
+
+    @Override
+    public String toString() {
+        return "AdvanceAdjustmentVerify{" +
+                "verifyId='" + verifyId + '\'' +
+                ", adjustmentId='" + adjustmentId + '\'' +
+                ", empId='" + empId + '\'' +
+                ", adjustmentTime=" + adjustmentTime +
+                ", isAdopt='" + isAdopt + '\'' +
+                ", adjustmentComment='" + adjustmentComment + '\'' +
+                ", instanceId='" + instanceId + '\'' +
+                '}';
+    }
 }

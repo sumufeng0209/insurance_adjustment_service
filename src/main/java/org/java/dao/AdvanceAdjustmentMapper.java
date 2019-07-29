@@ -1,10 +1,12 @@
 package org.java.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.java.entity.AdvanceAdjustment;
 
 /**
  * 垫付理算表
  */
+@Mapper
 public interface AdvanceAdjustmentMapper {
     int deleteByPrimaryKey(String adjustmentId);
 

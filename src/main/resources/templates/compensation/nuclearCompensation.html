@@ -12,12 +12,13 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/vue.js"></script>
     <script src="../js/element/index.js"></script>
+    <script src="../js/vue-resource.js"></script>
 </head>
 
 <!--核赔页面-->
 
 <body>
-    <div id="app" style="width: 80%;margin: auto" id="app">
+    <div id="app" style="width: 80%;margin: auto">
         <form action="">
             <table class="table table-bordered">
                 <tr>
@@ -69,7 +70,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">垫付核赔</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg-heipei">预赔核赔</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg-quanmian">全面理算核赔</button>
-        <!---->
+        <!--垫付核赔-->
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="width: 2000px">
             <div class="modal-dialog modal-lg" role="document" style="width: 1200px">
                 <div class="modal-content" style="width: 1200px">
@@ -84,7 +85,7 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label >创建人</label>
-                                        <input class="form-control" type="text" style="width: 150px" />
+                                        <input class="form-control" type="text" style="width: 150px" v-model="advanceAdjustmentInfo.empId"  disabled/>
                                     </div>
                                 </form>
                             </td>
@@ -92,7 +93,7 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label >创建时间</label>
-                                        <input class="form-control" type="text" style="width: 150px" />
+                                        <input class="form-control" type="text" style="width: 150px" v-model="advanceAdjustmentInfo.adjustmentTime" disabled/>
                                     </div>
                                 </form>
                             </td>
@@ -102,7 +103,13 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label >垫付险别</label>
-                                        <input class="form-control" type="text" style="width: 150px" />
+                                        <select class="form-control" v-model="advanceAdjustmentInfo.itemId" disabled>
+                                            <template v-for="item in typeOfInsurance">
+                                                    <option :value="item.insuranceId">
+                                                        {{item.insuranceName}}
+                                                    </option>
+                                            </template>
+                                        </select>
                                     </div>
                                 </form>
                             </td>
@@ -110,15 +117,15 @@
                                 <form class="form-inline">
                                     <div class="form-group">
                                         <label >垫付金额</label>
-                                        <input class="form-control" type="text" style="width: 150px" />
+                                        <input class="form-control" type="text" style="width: 150px" v-model="advanceAdjustmentInfo.advancePrice"/>
                                     </div>
                                 </form>
                             </td>
                             <td>
                                 <form class="form-inline">
                                     <div class="form-group">
-                                        <label >垫付金额</label>
-                                        <input class="form-control" type="text" style="width: 150px" />
+                                        <label >垫付原因</label>
+                                        <input class="form-control" type="text" style="width: 150px" v-model="advanceAdjustmentInfo.advanceReason"/>
                                     </div>
                                 </form>
                             </td>
@@ -126,7 +133,7 @@
                         <tr>
                             <td colspan="3">
                                 <label  style="color: cornflowerblue">计算书说明:</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" v-model="advanceAdjustmentInfo.advanceDetails"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -180,11 +187,11 @@
                                 <label >
                                     垫付核赔意见
                                 </label>
-                                <select class="form-control" style="width: 250px">
-                                        <option>
+                                <select class="form-control" style="width: 250px" v-model="advanceAdjustmentVerify.isAdopt">
+                                        <option :value="1">
                                             同意赔付
                                         </option>
-                                        <option>
+                                        <option :value="0">
                                             拒绝赔付
                                         </option>
                                     </select>
@@ -193,13 +200,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" v-model="advanceAdjustmentVerify.adjustmentComment"></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: right">
                                 <button type="button" class="btn btn-info">上传文档</button>
-                                <button type="button" class="btn btn-success">提交</button>
+                                <button type="button" class="btn btn-success" @click="commitAdvanceAdjustmentVerify()">提交</button>
                             </td>
                         </tr>
                     </table>
@@ -475,6 +482,21 @@
         var vm = new Vue({
             "el": "#app",
             "data": {
+
+                advanceAdjustmentVerify:{
+                    isAdopt:1,
+                    adjustmentComment:""
+
+                },
+                advanceAdjustmentInfo:{
+                    empId:1,
+                    adjustmentTime:"2019-02-02",
+                    itemId:"2123f8d6-9d6b-11e9-8168-00163e04ed9f",
+                    advancePrice:100,
+                    advanceReason:"1111111",
+                    advanceDetails:"89o0p087678"
+                },
+                typeOfInsurance:null,
                 comprehensiveMotorVehicle: {
                     duty: {
                         value: 0,
@@ -515,10 +537,25 @@
                     insured_truename: "",
                     car_number: "",
                     filing_submit_time: "",
-
                 },
-
+            },
+            methods:{
+                commitAdvanceAdjustmentVerify(){
+                    this.$http.post("http://localhost:9000/gateway/adjustment/insert/advanceAdjustmentVerify/"+1,this.advanceAdjustmentVerify,{emulateJSON:true}).then((res)=>{
+                        console.log(res.body)
+                        let data = res.body;
+                        this.$http.post("http://localhost:9000/gateway/schedule/taskAutoDispatch/"+data).then((result)=>{
+                            console.log(result.body)
+                        })
+                    })
+                }
+            },
+            created(){
+                this.$http.post("http://localhost:9000/gateway/adjustment/typeof/findAll").then((res)=>{
+                    this.typeOfInsurance=res.body;
+                })
             }
+
         })
     </script>
 </body>

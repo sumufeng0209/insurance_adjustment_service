@@ -17,9 +17,26 @@ spring:
     mode: LEGACYHTML5
     cache: false
     encoding: UTF-8
+  activiti:
+    database-schema: update
+    check-process-definitions: false
+  redis:
+    host: 192.168.31.128
+    port: 6379
+    jedis:
+      pool:
+        max-active: 1000
+        max-idle: 100
+        min-idle: 10
+        max-wait: 10000
+
 eureka:
   client:
     service-url:
       default-Zone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+mybatis:
+  mapper-locations: mapper/*Mapper.xml
+  type-aliases-package: java.util
+

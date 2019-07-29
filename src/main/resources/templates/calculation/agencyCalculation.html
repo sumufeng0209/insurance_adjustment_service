@@ -13,6 +13,7 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/vue.js"></script>
 <script src="../js/element/index.js"></script>
+<script src="../js/vue-resource.js"></script>
 
 <body>
     <!--代理算页面-->
@@ -99,9 +100,9 @@
         </table>
 
         <!--垫付理算-->
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="advanceModel" role="dialog" aria-labelledby="myLargeModalLabel" style="width: 70%;margin: auto">
-            <div class="modal-dialog modal-lg" role="document" style="width:  100%">
-                <div class="modal-content" style="width: 100%">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="advanceModel" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document" style="width:1500px">
+                <div class="modal-content" style="width:1500px">
                     <table class="table table-striped">
                         <tr>
                             <td colspan="8">
@@ -110,38 +111,43 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="exampleInputName2">创建人</label>
+                                <label f>创建人</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" style="width: 240px">
+                                <input type="text" class="form-control" style="width: 240px" disabled/>
                             </td>
                             <td>
-                                <label for="exampleInputName2">创建时间</label>
+                                <label>创建时间</label>
                             </td>
                             <td colspan="4">
-                                <input type="text" class="form-control" style="width: 240px" />
+                                <input type="text" class="form-control" style="width: 240px" disabled/>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="exampleInputName2">垫付险种类别</label>
+                                <label>垫付险种类别</label>
                             </td>
                             <td>
-                                <select class="form-control" style="width: 240px">
+                                <select class="form-control" style="width: 240px" v-model="advanceAdjustment.itemId">
                                     <option>
                                         <label >请选择</label>
                                     </option>
+                                    <template v-for="item in typeOfInsurance">
+                                        <option  :value="item.insuranceId" >
+                                            {{item.insuranceName}}
+                                        </option>
+                                    </template>
                                 </select>
                             </td>
                             <td>
                                 <label >垫付金额</label>
                             </td>
                             <td>
-                                <input type="text" class="form-control" style="width: 240px">
+                                <input type="text" class="form-control" style="width: 240px" v-model="advanceAdjustment.advancePrice">
                             </td>
                             <td colspan="2">
                                 <label >垫付原因</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" v-model="advanceAdjustment.advanceReason"></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -149,7 +155,7 @@
                                 <label>计算书说明:</label>
                             </td>
                             <td colspan="7">
-                                <textarea class="form-control" rows="5"></textarea>
+                                <textarea class="form-control" rows="5" v-model="advanceAdjustment.advanceDetails"></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -159,22 +165,22 @@
                         </tr>
                         <tr>
                             <td>
-                                <label  style="color: cornflowerblue">其他费用信息</label>
+                                <label  style="color: cornflowerblue" >其他费用信息</label>
                             </td>
                             <td colspan="2">
                             </td>
                             <td>
                                 <label >交强费用合计</label>
-                                <input type="text" class="form-control" v-model="crossCostTotal" />
+                                <input type="text" class="form-control" v-model="crossCostTotal"/>
                             </td>
 
                             <td>
                                 <label >商业费用合计</label>
-                                <input type="text" class="form-control" v-model="commerceSurvey" />
+                                <input type="text" class="form-control" v-model="commerceSurvey"/>
                             </td>
                             <td>
                                 <label >总计</label>
-                                <input type="text" class="form-control" v-model="sumMoney" />
+                                <input type="text" class="form-control" v-model="sumMoney"/>
                             </td>
                         </tr>
                         <tr>
@@ -224,7 +230,7 @@
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right">
-                                <button type="button" class="btn btn-success">提交</button>
+                                <button type="button" class="btn btn-success" v-on:click="commitAdvance()">提交</button>
                                 <button type="button" class="btn btn-info">上传文档</button>
                             </td>
                         </tr>
@@ -333,7 +339,7 @@
                         <tr>
                             <td colspan="8" style="text-align: right">
                                 <button type="button" class="btn btn-info">上传单证</button>
-                                <button type="button" class="btn btn-info">提交</button>
+                                <button type="button" class="btn btn-info" v-on:click="commitPrestressing()">提交</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             </td>
                         </tr>
@@ -608,345 +614,8 @@
         </div>
 
     </div>
-    <script>
-        var vm = new Vue({
-            "el": "#app",
-            data: {
-                //分页
-                model: {
-                    total: 100,
-                    size: 20,
-                    count: 11
-                },
+    <script src="../js/agencyCalculation.js"></script>
 
-                //页面显示的数据
-                pageList: {
-
-                },
-
-                commercialFlag: 1, //用于判断用户是否购买商业险
-                /**
-                 * 
-                 * 预赔的属性
-                 */
-
-                commerceMoney: null, //如果客户购买了商业险则计算商业险的金额
-                motorMoey: 0, //机动车强制三者险合计
-                commerceSumMonry: 0, //商业合计
-                sumMotorCommerceMone: 0, //机动车强制三者险和商业合计 
-
-
-                /***
-                 * 
-                 * 全面理算商业险
-                 */
-                comprehensiveCommercial: {
-                    duty: {
-                        value: 0,
-                        name: "----其他",
-                    },
-                    noDuty: {
-                        value: 0,
-                        name: "----无责其他",
-                    },
-                    deathMaim: {
-                        value: 0,
-                        name: "----死亡伤残",
-                    },
-                    medicalCare: {
-                        value: 0,
-                        name: "----医疗费用",
-                    },
-                    property: {
-                        value: 0,
-                        name: "----财产损失",
-                    },
-
-                    noDutyDeathMaim: {
-                        value: 0,
-                        name: "----无责死亡伤残",
-                    },
-
-                    noDutyMedicalCare: {
-                        value: 0,
-                        name: "----无责医疗费用",
-                    },
-
-                    noDutyProperty: {
-                        value: 0,
-                        name: "-----无责财产损失",
-                    }
-                },
-
-                /*
-                    全面理算机动车强制险
-                **/
-                comprehensiveMotorVehicle: {
-                    duty: {
-                        value: 0,
-                        name: "----其他",
-                    },
-                    noDuty: {
-                        value: 0,
-                        name: "----无责其他",
-                    },
-                    deathMaim: {
-                        value: 0,
-                        name: "----死亡伤残",
-                    },
-                    medicalCare: {
-                        value: 0,
-                        name: "----医疗费用",
-                    },
-                    property: {
-                        value: 0,
-                        name: "----财产损失",
-                    },
-                    noDutyDeathMaim: {
-                        value: 0,
-                        name: "----无责死亡伤残",
-                    },
-                    noDutyMedicalCare: {
-                        value: 0,
-                        name: "----无责医疗费用",
-                    },
-                    noDutyProperty: {
-                        value: 0,
-                        name: "-----无责财产损失",
-                    }
-                },
-
-
-                /*
-                    机动车强制险
-                **/
-
-                motorVehicle: [{
-                    deathMaim: {
-                        value: 0,
-                        name: "----死亡伤残",
-                    }
-                }, {
-                    medicalCare: {
-                        value: 0,
-                        name: "----医疗费用",
-                    }
-                }, {
-                    property: {
-                        value: 0,
-                        name: "----财产损失",
-                    }
-                }, {
-                    noDutyDeathMaim: {
-                        value: 0,
-                        name: "----无责死亡伤残",
-                    }
-                }, {
-                    noDutyMedicalCare: {
-                        value: 0,
-                        name: "----无责医疗费用",
-
-                    }
-                }, {
-                    noDutyProperty: {
-                        value: 0,
-                        name: "-----无责财产损失",
-                    }
-                }], //机动车强制险
-
-
-                /**
-                 * 其他费用信息的属性
-                 */
-                //其他费用信息
-                otherText: "交强待查看费",
-                otherMoney: 0, //其他费用
-                condition: { //查询条件
-                    compensate_case_id: "",
-                    report_a_case_id: "",
-                    insured_truename: "",
-                    car_number: "",
-                    filing_submit_time: "",
-
-                },
-                insertOther: 2,
-                otherData: null,
-                crossCostTotal: 0, //交强待查勘费用合计
-                commerceSurvey: 0, //商业查勘费用合计
-                sumMoney: 0 //其他费用总和
-            },
-            methods: {
-                //分页
-                getIndex:function() {
-
-                },
-
-                /***
-                    金融合计
-                */
-                totalAmout:function() {
-                    for (var item in this.comprehensiveCommercial) {
-                        for (var i in this.comprehensiveMotorVehicle) {
-                            if (item == i) {
-
-                                break;
-                            }
-                        }
-                    }
-                },
-
-
-                /**
-                    进入全面理算
-                */
-                getIntoAdjustment:function() {
-                    for (var item in this.comprehensiveCommercial) {
-                        this.comprehensiveCommercial[item].value = 0;
-                    }
-                    for (var i in this.comprehensiveMotorVehicle) {
-                        this.comprehensiveMotorVehicle[i].value = 0;
-                    }
-
-                    $("#comprehensive").modal("show");
-                    this.resetOther();
-                },
-
-
-
-                //初始化商业险的信息
-                init:function() {
-                    this.commerceMoney = [{
-                        deathMaim: {
-                            value: 0,
-                            name: "----死亡伤残",
-                        }
-                    }, {
-                        medicalCare: {
-                            value: 0,
-                            name: "----医疗费用",
-                        }
-                    }, {
-                        property: {
-                            value: 0,
-                            name: "----财产损失",
-                        }
-                    }, {
-                        noDutyDeathMaim: {
-                            value: 0,
-                            name: "----无责死亡伤残",
-                        }
-                    }, {
-                        noDutyMedicalCare: {
-                            value: 0,
-                            name: "----无责医疗费用",
-
-                        }
-                    }, {
-                        noDutyProperty: {
-                            value: 0,
-                            name: "-----无责财产损失",
-                        }
-                    }]
-                },
-
-                /**
-                    进入预赔理算
-                */
-                compensation:function() {
-                    $("#mymodel").modal("show")
-                    this.commercialFlag = 1;
-                    if (this.commercialFlag == 1) {
-                        this.init();
-                    } else {
-                        this.commerceMoney = null;
-                    }
-
-                },
-
-
-
-                //进入垫付理算
-                advanceModel:function() {
-                    $("#advanceModel").modal("show")
-                    this.resetOther();
-                },
-
-                //新增其他费用
-                insertOtherMoney:function() {
-
-                    var data = {
-                        "name": this.otherText,
-                        "price": this.otherMoney,
-                        "state": 1
-                    }
-                    var flag = false
-                    for (var i = 0; i < this.otherData.length; i++) {
-                        if (this.otherData[i].name == this.otherText) {
-                            flag = true
-                            break;
-                        }
-                    }
-
-                    if (flag) {
-                        $("#element").popover('show');
-                        return;
-                    } else {
-                        this.otherData.push(data);
-                        $("#element").popover('hide')
-                    }
-                    if (this.otherText == "商业待查勘费") {
-                        this.commerceSurvey = data["price"]
-                    } else {
-                        this.crossCostTotal = data["price"]
-                    }
-                    this.sumMoney = this.crossCostTotal * 1 + this.commerceSurvey * 1
-
-                },
-                //重置其他
-                resetOther:function() {
-                    this.otherData = null;
-                    this.insertOther = 2;
-                    this.crossCostTotal = 0.00; //交强待查勘费用合计
-                    this.commerceSurvey = 0.00; //商业查勘费用合计
-                    this.sumMoney = 0;
-                    this.otherMoney = 0;
-                },
-                //删除其他费用
-                deleteSurvey:function(name) {
-                    for (var i = 0; i < this.otherData.length; i++) {
-                        if (this.otherData[i].name == name) {
-                            if (name == "商业待查勘费") {
-                                this.crossCostTotal = 0;
-                            } else {
-                                this.commerceSurvey = 0;
-                            }
-                            this.sumSurvey = this.crossCostTotal * 1 + this.commerceSurvey * 1
-                            this.otherData.splice(i, 1)
-                        }
-                    }
-                },
-                //改变其他费用的信息
-                chageSurveyInfo:function(state, name) {
-                    for (var i = 0; i < this.otherData.length; i++) {
-                        if (this.otherData[i].name == name) {
-                            state == 1 ? this.otherData[i].state = 2 : this.otherData[i].state = 1
-                        }
-                    }
-                },
-                //新增信息的费用关闭
-                insertOtherMoneyClose:function() {
-                    this.insertOther = 2
-                },
-                //显示
-                changeInsertOther: function() {
-                    this.insertOther = 1;
-                    if (this.otherData == null) {
-                        this.otherData = new Array();
-                    }
-                },
-            },
-        });
-    </script>
 </body>
 
 </html>

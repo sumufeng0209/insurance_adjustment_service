@@ -12,6 +12,7 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/vue.js"></script>
     <script src="../js/element/index.js"></script>
+    <script src="../js/vue-resource.js"></script>
 
 </head>
 
@@ -47,20 +48,26 @@
         var vm = new Vue({
             "el": "#app",
             "data": {
+
+                pageData:null,
                 model: {
                     size: 20,
                     count: 11,
                     total: 100,
                 },
-                pageList: {
-
-                }
             },
             methods: {
                 getIndex:function () {
                     
                 }
             },
+
+            created() {
+                this.$http.post("http://localhost:9000/gateway/case/find/filing").then((res)=>{
+                    this.pageData=res.body;
+                    console.log(res.body);
+                })
+            }
 
         })
     </script>

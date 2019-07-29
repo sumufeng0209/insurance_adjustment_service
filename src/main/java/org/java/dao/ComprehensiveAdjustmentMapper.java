@@ -1,10 +1,12 @@
 package org.java.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.java.entity.ComprehensiveAdjustment;
 
 /**
  * 全面理算表
  */
+@Mapper
 public interface ComprehensiveAdjustmentMapper {
     int deleteByPrimaryKey(String adjustmentId);
 

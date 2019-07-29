@@ -7,9 +7,9 @@ import org.java.entity.AdvanceAdjustment;
  */
 public interface AdvanceAdjustmentService {
 
-    public AdvanceAdjustment findAdvanceAdjustmentById();
+    public AdvanceAdjustment findAdvanceAdjustmentById(String id);
 
-    public int insertAdvanceAdjustment(AdvanceAdjustment advanceAdjustment);
+    public String insertAdvanceAdjustment(AdvanceAdjustment advanceAdjustment,String taskId);
 
 
 }

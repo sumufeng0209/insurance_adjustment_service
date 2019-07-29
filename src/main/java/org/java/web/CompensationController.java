@@ -11,6 +11,7 @@ public class CompensationController {
 
     @RequestMapping("/com/init")
     public String init(){
+
         return "/compensation/nuclearCompensation";
     }
 }

@@ -1,10 +1,12 @@
 package org.java.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.java.entity.ComprehensiveAdjustmentVerify;
 
 /**
  * 全面理算核赔表
  */
+@Mapper
 public interface ComprehensiveAdjustmentVerifyMapper {
     int deleteByPrimaryKey(String verifyId);
 

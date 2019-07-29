@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.TypeOfInsuranceMapper" >
+  <resultMap id="BaseResultMap" type="org.java.entity.TypeOfInsurance" >
+    <id column="insurance_id" property="insuranceId" jdbcType="VARCHAR" />
+    <result column="insurance_name" property="insuranceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    insurance_id, insurance_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from type_of_insurance
+    where insurance_id = #{insuranceId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from type_of_insurance
+    where insurance_id = #{insuranceId,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from type_of_insurance
+  </select>
+  <insert id="insert" parameterType="org.java.entity.TypeOfInsurance" >
+    insert into type_of_insurance (insurance_id, insurance_name)
+    values (#{insuranceId,jdbcType=VARCHAR}, #{insuranceName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.java.entity.TypeOfInsurance" >
+    insert into type_of_insurance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        insurance_id,
+      </if>
+      <if test="insuranceName != null" >
+        insurance_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="insuranceId != null" >
+        #{insuranceId,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceName != null" >
+        #{insuranceName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.TypeOfInsurance" >
+    update type_of_insurance
+    <set >
+      <if test="insuranceName != null" >
+        insurance_name = #{insuranceName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where insurance_id = #{insuranceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.TypeOfInsurance" >
+    update type_of_insurance
+    set insurance_name = #{insuranceName,jdbcType=VARCHAR}
+    where insurance_id = #{insuranceId,jdbcType=VARCHAR}
+  </update>
+</mapper>

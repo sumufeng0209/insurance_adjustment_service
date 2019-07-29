@@ -1,8 +1,10 @@
 package org.java.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AdvanceAdjustment {
+
     private String adjustmentId;
 
     private String empId;
@@ -43,8 +45,10 @@ public class AdvanceAdjustment {
         this.empId = empId == null ? null : empId.trim();
     }
 
-    public Date getAdjustmentTime() {
-        return adjustmentTime;
+    public String getAdjustmentTime() {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        String format = simpleDateFormat.format(this.adjustmentTime);
+        return format;
     }
 
     public void setAdjustmentTime(Date adjustmentTime) {
@@ -121,5 +125,23 @@ public class AdvanceAdjustment {
 
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId == null ? null : instanceId.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "AdvanceAdjustment{" +
+                "adjustmentId='" + adjustmentId + '\'' +
+                ", empId='" + empId + '\'' +
+                ", adjustmentTime=" + adjustmentTime +
+                ", compensateCaseId='" + compensateCaseId + '\'' +
+                ", itemId='" + itemId + '\'' +
+                ", advancePrice=" + advancePrice +
+                ", advanceReason='" + advanceReason + '\'' +
+                ", advanceDetails='" + advanceDetails + '\'' +
+                ", crossStrengthFeeSum=" + crossStrengthFeeSum +
+                ", businessFeeSum=" + businessFeeSum +
+                ", otherFeeSum=" + otherFeeSum +
+                ", instanceId='" + instanceId + '\'' +
+                '}';
     }
 }
